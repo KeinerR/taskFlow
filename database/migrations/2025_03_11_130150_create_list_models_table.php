@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('list_models', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('board_id')->constrained()->onDelete('cascade');
             $table->integer('position')->default(0); // Orden de las listas en el tablero
             $table->timestamps();
         });

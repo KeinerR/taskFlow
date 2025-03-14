@@ -25,10 +25,24 @@
                           <p class=" ml-5">Board</p>
                     </button>
 
+                    </div>
 
+
+                    <div>
+                        <button onclick="window.Livewire.dispatch('assignTask')" class="group/disclosure-button mb-[2px] flex h-10 w-full items-center rounded-lg  text-zinc-500 hover:bg-zinc-800/5 hover:text-zinc-800 lg:h-8 dark:text-white/80 dark:hover:bg-white/[7%] dark:hover:text-white">
+                        <i class="fa-solid fa-plus ml-3"></i> <p  class="ml-5" >Agregar Tarea</p>
+                        </button>
+                    </div>
+
+                    <div>
+                        <button  class="group/disclosure-button mb-[2px] flex h-10 w-full items-center rounded-lg  text-zinc-500 hover:bg-zinc-800/5 hover:text-zinc-800 lg:h-8 dark:text-white/80 dark:hover:bg-white/[7%] dark:hover:text-white">
+                        <i class="fa-regular fa-pen-to-square ml-3 "></i>
+                        <p  class="ml-5" >Create List</p>
+                        </button>
 
 
                     </div>
+
                 </flux:navlist.group>
             </flux:navlist>
 

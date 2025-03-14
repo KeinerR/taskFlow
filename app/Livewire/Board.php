@@ -7,10 +7,12 @@ use App\Models\ListModel;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Board extends Component
 {
 
+    use WithPagination; // 👈 Habilitar paginación en Livewire
 
     public ModelsBoard $board;
     public $boardName;
@@ -35,8 +37,9 @@ class Board extends Component
     public function render()
     {
 
-        $boards = ModelsBoard::all();
-        return view('livewire.board', compact('boards'));
+        return view('livewire.board', [
+            'boards' => ModelsBoard::paginate(8) // 👈 Livewire manejará la paginación
+        ]);
     }
 
 
@@ -92,16 +95,25 @@ class Board extends Component
         $this->validate();
         $user_id = auth()->user()->id;
 
-       $boardCreated= ModelsBoard::updateOrCreate(['id'=>$this->board->id],[
-           'name' =>$this->boardName,
-           'user_id' => $user_id
+        $boardCreated = ModelsBoard::updateOrCreate(
+            ['id' => $this->board->id],
+            ['name' => $this->boardName, 'user_id' => $user_id]
+        );
 
-        ]);
+        $defaultLists = [
+            ['name' => 'To Do', 'position' => 1],
+            ['name' => 'In Progress', 'position' => 2],
+            ['name' => 'Done', 'position' => 3]
+        ];
 
-
-        if ($boardCreated->wasRecentlyCreated) {
-            $this->saveDefaultLists($boardCreated->id);
+        $listIds = [];
+        foreach ($defaultLists as $list) {
+            $listModel = ListModel::firstOrCreate(['name' => $list['name']], ['position' => $list['position']]);
+            $listIds[] = $listModel->id;
         }
+
+
+        $boardCreated->lists()->sync($listIds);
 
 
         $this->close();
@@ -109,27 +121,7 @@ class Board extends Component
     }
 
 
-        public function saveDefaultLists($boardId)
-        {
-            // Listas predeterminadas con su posición
-            $defaultLists = [
-                ['name' => 'To Do', 'position' => 1],
-                ['name' => 'In Progress', 'position' => 2],
-                ['name' => 'Done', 'position' => 3]
-            ];
 
-            foreach ($defaultLists as $list) {
-                ListModel::create([
-                    'name' => $list['name'],
-                    'board_id' => $boardId,
-                    'position' => $list['position']
-                ]);
-            }
-            $this->dispatch('shownotificacion');
-
-            return redirect()->route('dashboard'); // Ajusta el nombre de la ruta según tu proyecto
-
-        }
     public function close(){
 
         $this->reset('boardName');

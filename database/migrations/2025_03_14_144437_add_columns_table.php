@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('list_models', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('board_id')->constrained()->onDelete('cascade');
-            $table->integer('position')->default(0);
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+           $table->string('created_by')->nullable();
+           $table->string('edited_by')->nullable();
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('list_models');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

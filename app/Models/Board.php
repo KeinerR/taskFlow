@@ -20,6 +20,7 @@ class Board extends Model
     // Relación: Un tablero tiene muchas listas
     public function lists()
     {
-        return $this->hasMany(ListModel::class);
+        return $this->belongsToMany(ListModel::class, 'board_list', 'board_id', 'list_id');
     }
+
 }

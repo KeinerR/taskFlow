@@ -10,8 +10,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('dashboard', function(){
-    $boards= Board::all();
-    return view('dashboard', compact('boards'));
+    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {

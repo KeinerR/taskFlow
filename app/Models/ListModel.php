@@ -11,12 +11,12 @@ class ListModel extends Model
 
     protected $table = 'list_models';
 
-    protected $fillable = ['name', 'board_id', 'position'];
+    protected $fillable = ['name',  'position'];
 
     // Relación: Una lista pertenece a un tablero
-    public function board()
+    public function boards()
     {
-        return $this->belongsTo(Board::class);
+        return $this->belongsToMany(Board::class, 'board_list', 'list_id', 'board_id');
     }
 
     // Relación: Una lista tiene muchas tareas

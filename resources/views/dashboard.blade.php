@@ -1,12 +1,20 @@
 <x-layouts.app title="Dashboard">
 
-    <div class="flex flex-col h-full w-full p-6 gap-6 bg-gray-900 text-white">
+    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
+
+
+
+
+
+
+
+
+
+
 
         @livewire('list-model')
-        @livewire('board')
         @livewire('task')
-
-
+        @livewire('board')
 
 
 
@@ -14,7 +22,7 @@
 
         <!-- <script>
     document.addEventListener('livewire:init', () => {
-        Livewire.on('assignTask', (event) => {
+        Livewire.on('editBoard', (event) => {
             console.log('✅ Evento post-created detectado por Livewire 3', event);
         });
     });
